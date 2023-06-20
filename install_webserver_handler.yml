@@ -1,0 +1,24 @@
+---
+- name: Install and start apache
+  hosts: web
+  become: yes
+  vars:
+    webserver: httpd
+
+  tasks:
+  - name: "{{ webserver }} package is present"
+    yum:
+      name: "{{ webserver }}"
+      state: latest
+    notify: restart webserver
+
+  - name: latest index.html file is present
+    copy:
+      src: files/index.html
+      dest: /var/www/html/
+
+  handlers:
+  - name: restart webserver
+    service:
+      name: "{{ webserver }}"
+      state: restarted

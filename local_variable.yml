@@ -1,0 +1,33 @@
+# **** Setting Socket tunnel ****
+- name: Ejecuta en el pod localment
+  hosts: localhost
+  connection: local
+  vars:
+    acc_id: "{{ blueid_shortcode }}"
+    transaction_id: "{{ tower_job_id }}"
+    trans_num: "{{ transaction_id | default(999999999999999 | random(start=1)) | replace('\"', '') }}"
+    trans_num1: "{{ transaction_id12 | default(999999999999999 | random(start=1)) | replace('\"', '') }}"
+
+# roles:
+#   - role: ansible-role-event-socks-tunnel
+  tasks:
+    - name: Ejecutar comando
+      shell: |
+        cat /etc/hostname
+      register: var_out
+#      become: yes
+
+    - name: resultado comando
+      debug: msg="{{ var_out }}"
+
+    - name: variable de inventario next_code
+      debug: msg="{{ next_code }}"
+
+    - name: variable de tower_job_id
+      debug: msg="{{ tower_job_id }}"
+
+    - name: variable de trans_num
+      debug: msg="{{ trans_num }}"
+
+    - name: variable de trans_num1
+      debug: msg="{{ trans_num1 }}"

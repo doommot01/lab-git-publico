@@ -1,0 +1,20 @@
+# **** Setting Socket tunnel ****
+- name: Ejecuta en el pod localment
+  hosts: localhost
+  gather_facts: yes
+  connection: local
+# vars:
+#   acc_id: "{{ blueid_shortcode }}"
+#   transaction_id: "{{ tower_job_id }}"
+# roles:
+#   - role: ansible-role-event-socks-tunnel
+  tasks:
+    - name: Ejecutar comando
+      shell: |
+        sleep 60000
+#        cat /etc/hostname
+      register: var_out
+#      become: yes
+
+    - name: resultado comando
+      debug: msg="{{ var_out }}"

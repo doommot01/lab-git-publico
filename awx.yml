@@ -1,0 +1,29 @@
+---
+apiVersion: awx.ansible.com/v1beta1
+kind: AWX
+metadata:
+  name: awx
+spec:
+#  image: quay.io/ansible/awx
+#  image_version: 22.0.0
+  ee_images:
+  - name: AWX EE 21.11
+    image: quay.io/ansible/awx-ee:21.11.0
+  service_type: nodeport
+  projects_persistence: true
+  projects_storage_access_mode: ReadWriteOnce
+  web_extra_volume_mounts: |
+    - name: static-data
+      mountPath: /var/lib/projects
+  extra_volumes: |
+    - name: static-data
+      persistentVolumeClaim:
+        claimName:  awx-static-data-pvc
+  admin_user: spider
+  admin_email: josorior@kyndryl.com
+  nodeport_port: 30080
+  hostname: tower.kyndrylperu.net
+  task_privileged: true
+  ipv6_disabled: true
+#  auto_upgrade: false
+

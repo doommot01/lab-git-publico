@@ -1,0 +1,52 @@
+---
+
+- name: Role ensures that the socks tunnel is setup
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    acc_id: "{{ next_code }}"
+    transaction_id: "{{ tower_job_id }}"
+    trans_num111111: "{{ transaction_id12 | default(999999999999999 | random(start=1)) | replace('\"', '') }}"
+    puerto_socks: "{{ lookup('env','jh_socks_port') }}"
+  #  account_code: "next_codigo_peru"
+  # roles:
+  #   - role: ../roles/tunel-rol
+
+  tasks:
+  - name: Display all variables/facts known for a host
+    debug:
+      var: hostvars['localhost']
+
+  - name: Set_facts
+    set_fact:
+      jump_hosts:
+        - ip: 192.168.1.10
+          ssh_user: user1
+          ssh_port: 22
+          ssh_private_key: /path/to/key1
+          ssh_private_key_passphrase: passphrase1
+
+  - name: Display all variables/facts known for a host luego de set_facts
+    debug:
+      var: hostvars['localhost']
+
+  - name: hostvars['localhost']['jump_hosts']
+    debug:
+      var: hostvars['localhost']['jump_hosts']
+
+- hosts: all
+  gather_facts: no
+  vars:
+    trans_num: "{{ hostvars['localhost']['jump_hosts'][0]['ssh_private_key'] }}"
+    transaction_id: "{{ transaction_id }}"
+    custom01: "{{ hostvars['localhost']['jump_hosts'][0]['ssh_private_key'] }}"
+
+  tasks:
+
+  - name: Variable de tarea anterior
+    debug: msg="{{ custom01 }}"
+
+  - name: Variable custom_value
+    debug:
+      var: custom_value

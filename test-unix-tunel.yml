@@ -1,0 +1,13 @@
+---
+- hosts: all
+  gather_facts: yes
+
+  tasks:
+
+  - name: Get procesos
+    shell: |
+      ps -fea
+    register: var_out
+
+  - name: mostrar procesos
+    debug: msg="{{ var_out }}"

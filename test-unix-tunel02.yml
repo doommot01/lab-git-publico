@@ -1,0 +1,33 @@
+---
+
+- name: Role ensures that the socks tunnel is setup
+  hosts: localhost
+  connection: local
+  vars:
+    acc_id: "{{ next_code }}"
+    transaction_id: "{{ tower_job_id }}"
+    trans_num111111: "{{ transaction_id12 | default(999999999999999 | random(start=1)) | replace('\"', '') }}"
+    puerto_socks: "{{ lookup('env','jh_socks_port') }}"
+  roles:
+    - role: ../roles/tunel-rol
+
+- hosts: all
+  gather_facts: yes
+  vars:
+    trans_num: "{{ trans_num111111 }}"
+    transaction_id: "{{ transaction_id }}"
+    
+  tasks:
+
+  - name: Get procesos
+    shell: |
+      hostname
+    register: var_out
+    become: yes
+
+  - name: mostrar hostname
+    debug: msg="{{ var_out }}"
+
+  - name: Debug custom_value variable
+    debug:
+      var: custom_value

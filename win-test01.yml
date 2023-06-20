@@ -1,0 +1,13 @@
+---
+- hosts: all
+  gather_facts: yes
+
+  tasks:
+
+  - name: Get services
+    win_shell: |
+      Get-Service | Select-Object name,DisplayName,status,starttype
+    register: var_out
+
+  - name: mostrar servicio
+    debug: msg="{{ var_out }}"

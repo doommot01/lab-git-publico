@@ -1,0 +1,18 @@
+---
+# **** Setting Socket tunnel ****
+- name: Create socks tunnel
+  hosts: localhost
+  connection: local
+  vars:
+    acc_id: "{{ next_code }}"
+    transaction_id: "{{ tower_job_id }}"
+  roles:
+    - role: ../roles/ansible-role-event-socks-tunnel
+
+- hosts: all
+  gather_facts: no
+  tasks:
+
+  - name: Variable custom_value
+    debug:
+      var: custom_value02

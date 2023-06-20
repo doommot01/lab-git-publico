@@ -1,0 +1,10 @@
+---
+# **** Setting Socket tunnel ****
+- name: Role ensures that the socks tunnel is setup
+  hosts: localhost
+  connection: local
+  vars:
+    acc_id: "{{ next_code }}"
+    transaction_id: "{{ tower_job_id }}"
+  roles:
+    - role: ../roles/ansible-role-event-socks-tunnel

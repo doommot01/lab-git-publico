@@ -1,0 +1,12 @@
+---
+# **** Setting Socket tunnel ****
+- name: Role ensures that the socks tunnel is setup
+  hosts: localhost
+  connection: local
+  vars:
+    acc_id: "{{ next_code }}"
+    transaction_id: "{{ tower_job_id }}"
+    trans_num1: "{{ transaction_id12 | default(999999999999999 | random(start=1)) | replace('\"', '') }}"
+    puerto_socks: "{{ lookup('env','jh_socks_port') }}"
+  roles:
+    - role: ../roles/tunel-rol

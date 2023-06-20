@@ -1,0 +1,23 @@
+---
+# **** Setting Socket tunnel ****
+- name: Create socks tunnel
+  hosts: localhost
+  connection: local
+  vars:
+    acc_id: "{{ next_code }}"
+    transaction_id: "{{ tower_job_id }}"
+  roles:
+    - role: ../roles/ansible-role-event-socks-tunnel
+
+- hosts: all
+  gather_facts: yes
+
+  tasks:
+
+  - name: Get services
+    win_shell: |
+      Get-Service
+    register: var_out
+
+  - name: mostrar servicio
+    debug: msg="{{ var_out }}"
